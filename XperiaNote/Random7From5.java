@@ -34,3 +34,16 @@ publicclassSolution{
       // implemented for us
   } 
 }
+
+
+Shuffle:
+
+public static int[] shuffleArray(int[] input) {
+    for (int i = 0; i < input.length; i++) {
+        int swap = i + (int) (Math.random() * (input.length - i)); 
+        int temp = input[swap];
+        input[swap] = input[i];
+        input[i] = temp;
+    }
+    return input; 
+}
