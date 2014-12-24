@@ -4,8 +4,9 @@
     		return true;
     	if(!checkBST(T.left))
     		return false;
-    	if(T.val<pre)
+    	if(T.val<=pre)
     		return false;
+    	pre = T.val;
     	if(!checkBST(T.right))
     		return false;
     	return true;
