@@ -13,8 +13,8 @@ boolean isBalanced(TreeNode T){
 	return isBalanced(T.left)&&isBalanced(T.right);
 }
 
-Although this works, it's not very efficient. On each node, we recurse through its entire subtree.
-This means that getHeight is called repeatedly on the same nodes.The algorithm is therefore O(N^2).
+//Although this works, it's not very efficient. On each node, we recurse through its entire subtree.
+//This means that getHeight is called repeatedly on the same nodes.The algorithm is therefore O(N^2).
 
 boolean isBalanced(TreeNode T){
 	if( checkHeight(T)==-1 )
