@@ -1,6 +1,6 @@
 //Convert between string of hex adecimal characters and array of nibbles
 
-char[] hexChar = {'0', '1', ......, 'D', 'E'};
+char[] hexChar = {'0', '1', ......, 'D', 'E', 'F'};
 
 String binaryToHexString(byte[] b){
 	StringBuffer sb = new StringBuffer(b.length*2); //1 byte 8 bits, 1 hex char 4 bits
