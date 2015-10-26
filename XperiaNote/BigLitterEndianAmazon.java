@@ -24,7 +24,7 @@ bool endianess(){
 	return endianTest.singleByte>0;
 }
 
-//reverte between big/litter endian
+//reverte byte
 byte reverse(byte ch){
 	int base = 0x01, rbase = 0x80;
 	byte ret = 0x00;
