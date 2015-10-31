@@ -1,0 +1,65 @@
+
+//	You have an array of N integers. There are M contiguous segments that are 
+//	sorted within the segment, but the whole array is not sorted. N >> M. How to
+//	produce a sorted version of this array?
+//
+//	Example: [(1,3,5),(2,4,6,10,20,30),(11,12,23)]
+//
+//	面试官是个国男，没任何提示。一开始我还以为输入是M个ArrayList，后来一再问才说
+//	输入的只是一个一维数组，要自己去发现M个sorted的sub array，然后做sort。我说的
+//	是用heapsort找M个sub array的最小值，然后指针后移。要注意的是指针不要越界到后
+//	一个sub数组。然后写code。感觉40分钟连讲思路带写bug free的code还是有些
+//	challenge，关键是要先把各个sub array先找出来。
+
+	public void sort(int[] arr){
+		if(arr==null || arr.length==0)
+			return;
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(0);
+		for(int i=1; i<arr.length; i++){
+			if(arr[i]<arr[i-1])
+				list.add(i);
+		}
+		mergeSort(arr, list, 0, list.size()-1);
+	}
+	
+	private void mergeSort(int[] arr, List<Integer> list, int low, int high) {
+		if(low>=high)
+			return;
+		int mid = low+(high-low)/2;
+		mergeSort(arr, list, low, mid);
+		mergeSort(arr, list, mid+1, high);
+		merge(arr, list, low, mid+1);
+	}
+
+	private void merge(int[] arr, List<Integer> list, int low, int high) {
+		// TODO Auto-generated method stub
+		int index1 = list.get(low);
+		int index2 = list.get(high);
+		int last = index2+1;
+		while(last<=arr.length){
+			if(last==arr.length || arr[last]<arr[last-1])
+				break;
+			last++;
+		}
+		int[] nums = new int[last-index1];
+		int s=index1, k=index2, q=0;
+		for(; s<index2&&k<last; q++){
+			if(arr[s]<arr[k]){
+				nums[q]=arr[s];
+				s++;
+			}else{
+				nums[q]=arr[k];
+				k++;
+			}
+		}
+		while(s<index2){
+			nums[q++]=arr[s++];
+		}
+		while(k<last){
+			nums[q++]=arr[k++];
+		}
+		for(int w=index1, e=0; w<last; w++,e++){
+			arr[w] = nums[e];
+		}
+	}
