@@ -6,7 +6,7 @@
 //第一步先提速到2，再跳到R[2]；
 //第二步先提速到3，再跳到R[5]；
 //第三步保持速度3，跳出数组范围，成功过河。
-
+ //O(2^n)
 	int getLeastSteps(int[] nums){
 		if(nums==null || nums.length==0)
 			return 0;
@@ -22,7 +22,7 @@
 			return 1+Math.min(helper(nums, pos+speed, speed), helper(nums, pos+speed+1, speed+1));
 		}
 	}
-	
+	//O(n)
 	int getLeastSteps(int[] nums){
 		if(nums==null || nums.length==0)
 			return 0;
