@@ -9,38 +9,28 @@
 //
 //}
 
-import java.util.Stack;
-public class IteratorOfInOrder {        
-        private TreeNode curr;
-        private Stack<TreeNode> nodes = new Stack<TreeNode>();
-        public IteratorOfInOrder(TreeNode root){
-                TreeNode nd = root;
-                while(nd != null){-google 1point3acres
-                        nodes.add(nd);
-                        nd = nd.left;
-                }                
-        }
-        
-        public int value(){                        
-                return curr.val;                
-        }
-
-        public void next(){
-                if(!nodes.isEmpty()){
-                        curr = nodes.pop();                        
-                }
-                
-                if(curr != null) {
-                        TreeNode nd = curr;
-                        if(nd.right != null) {
-                                nd = nd.right;
-                                while(nd != null) {
-                                        nodes.push(nd);
-                                        nd = nd.left;
-                                }
-                        }                        
-                }else{
-                        System.out.println("reach the last node in the tree");
-                }
-        }
+class IteratorOfInOrder {        
+    private TreeNode curNode;
+    private Stack<TreeNode> stack = new Stack<TreeNode>();
+    public IteratorOfInOrder(TreeNode root){
+    	addNode(root);
+    	next();
+    }
+    public int value(){                        
+            return curNode.val;           
+    }
+    private void addNode(TreeNode node){
+    	stack.add(node);
+    	while(node.left!=null){
+    		stack.add(node.left);
+    		node = node.left;
+    	}
+    }
+    public void next(){
+    	  if(stack.isEmpty())
+    		  return;
+          curNode = stack.pop();
+          if(curNode.right!=null)
+        	   addNode(curNode.right);
+    }
 }
