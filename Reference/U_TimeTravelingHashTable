@@ -1,0 +1,30 @@
+Implement TimeTravelingHashTable的get和insert方法
+* TimeTravelingHashTable. more info on 1point3acres.com
+* insert(key, value, timestamp)
+* get(key, timestamp). more info on 1point3acres.com
+* get(key) // returns value associated with key at latest time
+
+
+class keyToBSTMap<K, V>{
+        Map<K, TreeMap<Float, V>> keyToBSTMap = new HashMap<>();
+
+        public V get(K k, Float time){
+                if(keyToBSTMap.containsKey(k) == false) return null;
+                if(keyToBSTMap.get(k).containsKey(time))
+                        return  keyToBSTMap.get(k).get(time);
+                else
+                        return  keyToBSTMap.get(k).lowerEntry(time).getValue();
+        }
+
+        public void put(K k , Float time, V value){
+                if(keyToBSTMap.containsKey(k)) 
+                        keyToBSTMap.get(k).put(time, value);
+                else{
+                        TreeMap<Float, V> t = new TreeMap<>();
+                        t.put(time, value);
+                        keyToBSTMap.put(k, t);
+                }
+        }
+
+
+}
