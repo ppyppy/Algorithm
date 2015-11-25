@@ -54,6 +54,33 @@
 		   return pre;
 	   }
 	   
+	   //if has the parent node
+	   TreeNode p = null;
+	   TreeNode pre = null;
+	   public void init(TreeNode root){
+		   if(root==null)
+			   	return;
+		   while(root.left!=null){
+			   root=root.left;
+		   }
+		   p = root;
+	   }
+	   
+	   public boolean hasNext(){
+		   return p!=null;
+	   }
+	   
+	   public TreeNode next(){
+		   while(p.right!=null && p.right!=pre){
+			   p = p.right;
+			   while(p.left!=null){
+				   p = p.left;
+			   }
+		   }
+		   pre = p;
+		   p = p.parent;
+		   return pre;
+	   }
 	   
 	   
 	    
