@@ -90,11 +90,17 @@
 	        boolean[] nums = new boolean[6];
 	        TreeNode t = new TreeNode(4);
 	        t.left = new TreeNode(2);
+	        t.left.parent = t;
 	        t.left.left = new TreeNode(1);
+	        t.left.left.parent = t.left;
 	        t.left.right = new TreeNode(3);
+	        t.left.right.parent = t.left;
 	        t.right = new TreeNode(6);
+	        t.right.parent = t;
 	        t.right.left = new TreeNode(5);
+	        t.right.left.parent = t.right;
 	        t.right.right = new TreeNode(7);
+	        t.right.right.parent = t.right;
 	        s.init(t);
 	        while(s.hasNext())
 	        	System.out.println(s.next().val);
