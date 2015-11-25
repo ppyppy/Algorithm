@@ -8,16 +8,16 @@
 	boolean canCatchThieft(int n, int[] strategy){
 		if(strategy==null)
 			return false;
-		int k=strategy.length;
-		boolean[][] table = new boolean[k+1][n];
-		Arrays.fill(table[0], true);
+		int k = strategy.length;
+		boolean[][] A = new boolean[k+1][n];
+		Arrays.fill(A[0], true);
 		for(int i=1; i<=k; i++){
 			boolean isCatch = true;
 			for(int j=0; j<n; j++){
-				boolean preRoom = (j==0 ? false : table[i-1][j-1]);
-				boolean nextRoom = (j==n-1 ? false : table[i-1][j+1]);
-				table[i][j] = ((preRoom || nextRoom) && strategy[i]!=j);
-				if(table[i][j])
+				boolean leftRoom = (j==0 ? false : A[i-1][j-1]);
+				boolean rightRoom = (j==n-1 ? false : A[i-1][j+1]);
+				A[i][j] = (leftRoom || rightRoom) && strategy[i-1]!=j;
+				if(A[i][j])
 					isCatch = false;
 			}
 			if(isCatch)
@@ -25,3 +25,30 @@
 		}
 		return false;
 	}
+	boolean canCatchThieft1(int n, int[] strategy){
+		if(strategy==null)
+			return false;
+		int k = strategy.length;
+		boolean[] pre = new boolean[n];
+		Arrays.fill(pre, true);
+		for(int i=1; i<=k; i++){
+			boolean[] cur = new boolean[n];
+			boolean isCatch = true;
+			for(int j=0; j<n; j++){
+				boolean leftRoom = (j==0 ? false : pre[j-1]);
+				boolean rightRoom = (j==n-1 ? false : pre[j+1]);
+				cur[j] = (leftRoom || rightRoom) && strategy[i-1]!=j;
+				if(cur[j])
+					isCatch = false;
+			}
+			pre = cur;
+			if(isCatch)
+				return true;
+		}
+		return false;
+	}
+	
+	
+		int[] strategy = {2,2,1,1,2};
+	    	System.out.println(s.canCatchThieft(4, strategy));
+	    	System.out.println(s.canCatchThieft1(4, strategy));
