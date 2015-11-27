@@ -119,3 +119,7 @@ class ZigZagIterator{
 	    	while(s.hasNext()){
 	    		System.out.print(s.next()+",");
 	    	}
+
+//Given k sorted streams where each stream could possibly be infinite in length, 
+//describe an efficient algorithm to merge the k streams into a new stream (also in sorted order).
+http://www.careercup.com/question?id=9655082
