@@ -89,12 +89,7 @@ class ZigZagIterator{
 	    			iterator = (Iterator<Object>) obj;
 	    			if(pre.hasNext())
 	    				stack.push(pre);
-	    			if(iterator.hasNext())
-	    				obj = iterator.next();
-	    			else{
-	    				iterator = stack.pop();
-	    				obj = iterator.next();
-	    			}
+	    			obj = iterator.next();
 	    			pre = iterator;
 	    	}
 	    	return (int) obj;
