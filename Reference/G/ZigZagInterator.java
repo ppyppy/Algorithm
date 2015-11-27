@@ -69,3 +69,58 @@ class ZigZagIterator{
 	    public boolean hasNext() {
 	    	return iterator.hasNext();
 	    }
+
+
+
+//nested iterator, so funny
+
+	    Stack<Iterator<Object>> stack = new Stack<Iterator<Object>>();
+	    Iterator<Object> iterator;
+	    public void ZigzagIterator(Iterator<Object> iterator) {  
+	    	this.iterator = iterator;
+	    }
+	    
+	    public int next() {
+	    	if(!iterator.hasNext())
+	    		iterator = stack.pop();
+	    	Object obj = iterator.next();
+	    	Iterator<Object> pre = iterator;
+	    	while(!(obj instanceof Integer)){
+	    			iterator = (Iterator<Object>) obj;
+	    			if(pre.hasNext())
+	    				stack.push(pre);
+	    			if(iterator.hasNext())
+	    				obj = iterator.next();
+	    			else{
+	    				iterator = stack.pop();
+	    				obj = iterator.next();
+	    			}
+	    			pre = iterator;
+	    	}
+	    	return (int) obj;
+	    }
+	    
+	    public boolean hasNext() {
+	    	return iterator.hasNext() || !stack.isEmpty();
+	    }
+	    
+	    			//{0, {1, 2}, 3, {4, {5, 6}}}
+			List<Object> list = new ArrayList<Object>();
+			list.add(0);
+			List<Object> list11 = new ArrayList<Object>();
+//			list11.add(1);list11.add(2);
+			list.add(list11.iterator());
+			list.add(3);
+			List<Object> list12 = new ArrayList<Object>();
+			list12.add(4);
+			List<Object> list121 = new ArrayList<Object>();
+			list121.add(5);list121.add(6);
+			list12.add(list121.iterator());
+			list.add(list12.iterator());
+			
+			
+	    	Solution s = new Solution();
+	    	s.ZigzagIterator(list.iterator());
+	    	while(s.hasNext()){
+	    		System.out.print(s.next()+",");
+	    	}
