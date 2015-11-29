@@ -61,49 +61,6 @@ http://buttercola.blogspot.com/2015/09/leetcode-paint-house-ii.html
 A Time O(n*K) Solution:
 Use two variables min1 and min2, where min1 is the minimum value, whereas min2 is next to the minimum value. 
 
-Code (Java):
-?
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
 public class Solution {
     public int minCostII(int[][] costs) {
         if (costs == null || costs.length == 0) {
