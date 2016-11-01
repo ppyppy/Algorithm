@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+
+public class Solution {
+
+	private Map<String, HashSet<Integer>> map  = new HashMap<>();
+	private List<String> list = new ArrayList<String>();
+	
+	public void add(String word) {
+		HashSet<Integer> set = null;
+		if(map.containsKey(word)){
+			set = map.get(word);
+		}else{
+			set = new HashSet<Integer>();
+			map.put(word, set);
+		}
+		list.add(word);
+		set.add(list.size()-1);
+	}
+	
+	public boolean remove(String word){
+		if(!map.containsKey(word)){
+			return false;
+		}
+		Set<Integer> set = map.get(word);
+		Iterator<Integer> it = set.iterator();
+		if(!it.hasNext()){ //no index left, remove from map
+			map.remove(word);
+			return false;
+		}
+		int index = it.next();
+		if(index==list.size()-1){ //corner case, if index is last index
+			list.remove(index);
+			set.remove(index);
+			return true;
+		}
+		String lastValue = list.get(list.size()-1);
+		Set<Integer> lastSet = map.get(lastValue);
+		
+		list.set(index, lastValue); //update with last value
+		set.remove(index); //current set remove corresponding index
+		lastSet.remove(list.size()-1); //remove last index
+		lastSet.add(index); //add new index to lastSet
+		list.remove(list.size()-1); //remove last value
+		
+		return true;
+	}
+	
+	public String randomRemove() {
+		int index = new Random().nextInt(list.size());
+		String value = list.get(index);
+		if(remove(value)){
+			return value;
+		}
+		return null;
+	}
+	
+	public static void main(String[] args) {
+        RandomRemove s  = new RandomRemove();
+        s.add("dog");
+        System.out.println(s.remove("dog"));
+        s.add("cat");
+        System.out.println(s.remove("dog"));
+        s.add("dog");
+        s.add("bird");
+        s.add("panda");
+        System.out.println(s.remove("dog"));
+	}
+}
