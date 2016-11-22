@@ -1,0 +1,108 @@
+public class Solution<K, V> {
+	Map<K, TimeValuePair<V>> tvMap = new HashMap<K, TimeValuePair<V>>();
+
+	public void put(K k , Long time, V value){
+		if(tvMap.containsKey(k)){
+			TimeValuePair<V> timeVal = tvMap.get(k);
+			timeVal.addValue(time, value);
+		}else{
+			TimeValuePair<V> timeVal = new TimeValuePair<V>();
+			timeVal.addValue(time, value);
+			tvMap.put(k, timeVal);
+		}
+	}
+	
+	public TimeValuePair<V> get(K key){
+		return tvMap.get(key);
+	}
+	
+	public V get(K key, Long time){
+		TimeValuePair<V> tv = get(key);
+		if(tv!=null){
+			return tv.getValue(time);
+		}
+		return null;
+	}
+	
+	
+	public static void main(String[] args) {
+        Solution<String, String> s  = new Solution<String, String>();
+        s.put("key1", (long)100, "cat"); // cat bird dog fish
+        s.put("key1", (long)300, "dog");
+        s.put("key1", (long)200, "bird");
+        s.put("key1", (long)400, "fish");
+        
+        System.out.println(s.get("key1", (long)60)); //null
+        System.out.println(s.get("key1", (long)160)); //cat
+        System.out.println(s.get("key1", (long)260)); //bird
+        System.out.println(s.get("key1", (long)306)); //dog
+        System.out.println(s.get("key1", (long)606)); //fish
+	}
+}
+
+class TimeValuePair<V>{
+	TreeMap<Long, V> treeMap = new TreeMap<Long, V>(); 
+	
+	public void addValue(long t, V val){ //O (log(n))
+		treeMap.put(t, val);
+	}
+	
+	public V getValue(long time){  //O (log(n))
+		if(treeMap.containsKey(time)){
+			return treeMap.get(time);
+		}
+		Map.Entry<Long,V> entry = treeMap.floorEntry(time);
+		if( entry==null)
+			return null;
+		return entry.getValue();
+	}
+}
+
+class TimeValue<V> {
+	Map<Long, V> map = new HashMap<Long, V>();
+	List<Long> times = new ArrayList<Long>();
+	
+	public V getValue(long time){ // O (log(n))
+		if(map.containsKey(time)){
+			return map.get(time);
+		}else{
+			int low=0, high=times.size()-1;
+			while(low<=high){
+				int mid = low + (high-low)/2;
+				if(times.get(mid)<time){
+					low = mid+1;
+				}else{
+					high = mid-1;
+				}
+			}
+			if(low==0){
+				return null; //get the previous time index
+			}
+			return map.get(times.get(low-1));
+		}
+	}
+	
+	public void addValue(long time, V val){ // O (n)
+		if(map.containsKey(time)){ //already exists, update value
+			map.put(time, val);
+			return;
+		}
+		map.put(time, val);
+		int low=0, high=times.size()-1;
+		while(low<=high){
+			int mid = low + (high-low)/2;
+			if(times.get(mid)<time){
+				low = mid+1;
+			}else{
+				high = mid-1;
+			}
+		}
+		if(low==times.size()){
+			times.add(time);
+		}else{
+			times.add(low, time);
+		}
+	}
+	
+}
+
